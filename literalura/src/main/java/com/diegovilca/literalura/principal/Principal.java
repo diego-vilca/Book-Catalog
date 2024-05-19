@@ -1,6 +1,6 @@
 package com.diegovilca.literalura.principal;
 
-import java.util.Scanner;
+import com.diegovilca.literalura.service.JsonMapper;
 
 public class Principal {
 }
