@@ -10,14 +10,14 @@ public class Book {
     private String language;
     private String downloads;
 
-    public Book(BookDTO bookDTO){
-        this.title = bookDTO.title();
-        this.authors = bookDTO.authors();
-        this.language = bookDTO.language();
-        this.downloads = bookDTO.downloads();
+    public Book(BookDTO bookDTO) {
+        this.title = bookDTO.getTitle();
+        this.authors = bookDTO.getAuthorslist();
+        this.language = bookDTO.getLanguage();
+        this.downloads = bookDTO.getDownloads();
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
@@ -53,10 +53,8 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "title='" + title + '\'' +
-                "downloads='" + downloads + '\'' +
-                ", language='" + language + '\'' +
                 ", authors=" + authors +
-                ", title='" + title + '\'' +
+                ", language='" + language + '\'' +
                 ", downloads='" + downloads + '\'' +
                 '}';
     }

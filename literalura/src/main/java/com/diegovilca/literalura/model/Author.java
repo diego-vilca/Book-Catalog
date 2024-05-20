@@ -1,14 +1,12 @@
 package com.diegovilca.literalura.model;
 
-import java.time.LocalDate;
-
 public class Author {
     private Long id;
     private String name;
     private String birth_year;
     private String death_year;
 
-    public Author(AuthorDTO authorDTO){
+    public Author(AuthorDTO authorDTO) {
         this.name = authorDTO.name();
         this.birth_year = authorDTO.birth_year();
         this.death_year = authorDTO.death_year();
@@ -44,10 +42,8 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
-                "name='" + name + '\'' +
+        return "Author{" + "name='" + name + '\'' +
                 ", birth_year='" + birth_year + '\'' +
-                ", death_year='" + death_year + '\'' +
-                '}';
+                ", death_year='" + death_year + '\'' + '}';
     }
 }
