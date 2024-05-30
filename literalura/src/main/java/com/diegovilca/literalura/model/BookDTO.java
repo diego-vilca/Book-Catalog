@@ -3,9 +3,10 @@ package com.diegovilca.literalura.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class BookDTO {
@@ -66,12 +67,13 @@ public final class BookDTO {
         return opt.orElse("not specified");
     }
 
-    public List<Author> getAuthorslist() {
-        List<Author> authorsList = this.authors.stream()
-                .map(a -> new Author(a))
-                .collect(Collectors.toList());
-
-        return authorsList;
+    public Author getAuthor() {
+        Optional<AuthorDTO> author = authors.stream().findFirst();
+        if (author.isPresent()){
+            return new Author(author.get());
+        }else {
+            return new Author(new AuthorDTO("not specified","not specified","not specified"));
+        }
     }
 
     @Override

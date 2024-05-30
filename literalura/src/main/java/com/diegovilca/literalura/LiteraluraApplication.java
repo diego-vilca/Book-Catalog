@@ -1,22 +1,27 @@
 package com.diegovilca.literalura;
 
 import com.diegovilca.literalura.principal.Principal;
+import com.diegovilca.literalura.repository.IAuthorRepository;
+import com.diegovilca.literalura.repository.IBookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Scanner;
-
 @SpringBootApplication
 public class LiteraluraApplication implements CommandLineRunner {
+    @Autowired
+    private IBookRepository iBookRepository;
+    @Autowired
+    private IAuthorRepository iAuthorRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(LiteraluraApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LiteraluraApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		Principal principal = new Principal();
-		principal.showMenu();
-	}
+    @Override
+    public void run(String... args) throws Exception {
+        Principal principal = new Principal(iBookRepository, iAuthorRepository);
+        principal.showMenu();
+    }
 }

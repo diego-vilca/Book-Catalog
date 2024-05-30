@@ -1,23 +1,27 @@
 package com.diegovilca.literalura.principal;
 
-import com.diegovilca.literalura.service.BookService;
+import com.diegovilca.literalura.repository.IAuthorRepository;
+import com.diegovilca.literalura.repository.IBookRepository;
+import com.diegovilca.literalura.service.AppService;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class Principal {
     private final String URL_BASE = "https://gutendex.com/books/";
     private final Scanner scanner = new Scanner(System.in);
-    private final BookService bookService;
+    private final AppService bookService;
 
-    public Principal() {
-        bookService = new BookService();
+    public Principal(IBookRepository iBookRepository, IAuthorRepository iAuthorRepository) {
+        bookService = new AppService(iBookRepository, iAuthorRepository);
     }
 
     public void showMenu() {
         var option = -1;
         while (option != 0) {
             String menu = """
-                    
+                                        
                     +---------------------------------------+
                     |                Main Menu              |
                     +---------------------------------------+
@@ -37,7 +41,7 @@ public class Principal {
                     bookService.findBookByTitle(URL_BASE);
                     break;
                 case 2:
-
+                    bookService.getBooks();
                     break;
                 case 3:
 

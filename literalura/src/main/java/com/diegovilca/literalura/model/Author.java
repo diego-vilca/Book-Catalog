@@ -1,12 +1,28 @@
 package com.diegovilca.literalura.model;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "authors")
 public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String birth_year;
     private String death_year;
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private final List<Book> books;
+
+    public Author() {
+        this.books = new ArrayList<>();
+    }
 
     public Author(AuthorDTO authorDTO) {
+        this();
         this.name = authorDTO.name();
         this.birth_year = authorDTO.birth_year();
         this.death_year = authorDTO.death_year();
@@ -38,6 +54,10 @@ public class Author {
 
     public void setDeath_year(String death_year) {
         this.death_year = death_year;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
     }
 
     @Override

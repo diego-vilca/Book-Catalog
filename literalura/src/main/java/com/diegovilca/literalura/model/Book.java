@@ -1,18 +1,28 @@
 package com.diegovilca.literalura.model;
 
 
-import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private List<Author> authors;
+
+
+    @ManyToOne()
+    private Author author;
     private String language;
     private String downloads;
 
+    public Book() {
+    }
+
     public Book(BookDTO bookDTO) {
         this.title = bookDTO.getTitle();
-        this.authors = bookDTO.getAuthorslist();
+        this.author = bookDTO.getAuthor();
         this.language = bookDTO.getLanguage();
         this.downloads = bookDTO.getDownloads();
     }
@@ -29,8 +39,12 @@ public class Book {
         this.title = title;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getLanguage() {
@@ -53,7 +67,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "title='" + title + '\'' +
-                ", authors=" + authors +
+                ", author=" + author +
                 ", language='" + language + '\'' +
                 ", downloads='" + downloads + '\'' +
                 '}';
