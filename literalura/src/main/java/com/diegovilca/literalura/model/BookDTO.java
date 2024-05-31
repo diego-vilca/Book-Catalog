@@ -3,9 +3,7 @@ package com.diegovilca.literalura.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -69,18 +67,10 @@ public final class BookDTO {
 
     public Author getAuthor() {
         Optional<AuthorDTO> author = authors.stream().findFirst();
-        if (author.isPresent()){
+        if (author.isPresent()) {
             return new Author(author.get());
-        }else {
-            return new Author(new AuthorDTO("not specified","not specified","not specified"));
+        } else {
+            return new Author(new AuthorDTO("not specified", null, null));
         }
-    }
-
-    @Override
-    public String toString() {
-        return "{" + "title='" + title + '\'' +
-                ", authors=" + authors +
-                ", languages=" + languages +
-                ", downloads='" + downloads + '\'' + '}';
     }
 }

@@ -12,8 +12,8 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String birth_year;
-    private String death_year;
+    private Integer birthYear;
+    private Integer deathYear;
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private final List<Book> books;
 
@@ -24,8 +24,8 @@ public class Author {
     public Author(AuthorDTO authorDTO) {
         this();
         this.name = authorDTO.name();
-        this.birth_year = authorDTO.birth_year();
-        this.death_year = authorDTO.death_year();
+        this.birthYear = authorDTO.birthYear();
+        this.deathYear = authorDTO.deathYear();
     }
 
     public Long getId() {
@@ -40,20 +40,20 @@ public class Author {
         this.name = name;
     }
 
-    public String getBirth_year() {
-        return birth_year;
+    public Integer getBirthYear() {
+        return birthYear;
     }
 
-    public void setBirth_year(String birth_year) {
-        this.birth_year = birth_year;
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
     }
 
-    public String getDeath_year() {
-        return death_year;
+    public Integer getDeathYear() {
+        return deathYear;
     }
 
-    public void setDeath_year(String death_year) {
-        this.death_year = death_year;
+    public void setDeathYear(Integer deathYear) {
+        this.deathYear = deathYear;
     }
 
     public void addBook(Book book) {
@@ -62,8 +62,13 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" + "name='" + name + '\'' +
-                ", birth_year='" + birth_year + '\'' +
-                ", death_year='" + death_year + '\'' + '}';
+        return """
+                ****************************
+                *         Author           *
+                ****************************
+                Name: %s
+                Birth Year: %s
+                Death Year: %s
+                """.formatted(name, birthYear, deathYear);
     }
 }

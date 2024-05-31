@@ -1,16 +1,13 @@
 package com.diegovilca.literalura.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public record AuthorDTO(
+        @JsonAlias("name")
         String name,
-        String birth_year,
-        String death_year
+        @JsonAlias("birth_year")
+        Integer birthYear,
+        @JsonAlias("death_year")
+        Integer deathYear
 ) {
-    @Override
-    public String toString() {
-        return "{" +
-                "name='" + name + '\'' +
-                ", birth_year='" + birth_year + '\'' +
-                ", death_year='" + death_year + '\'' +
-                '}';
-    }
 }

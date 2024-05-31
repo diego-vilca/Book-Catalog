@@ -11,7 +11,6 @@ public class Book {
     private Long id;
     private String title;
 
-
     @ManyToOne()
     private Author author;
     private String language;
@@ -65,11 +64,14 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author=" + author +
-                ", language='" + language + '\'' +
-                ", downloads='" + downloads + '\'' +
-                '}';
+        return """
+                ***************************
+                *          Book           *
+                ***************************
+                Title: %s
+                Author: %s
+                Language: %s
+                Downloads: %s
+                """.formatted(title, author.getName(), language, downloads);
     }
 }

@@ -33,7 +33,7 @@ public class AppService {
         List<BookDTO> filteredBooks = filterBooks(books, title);
         System.out.println("\n+---------------------------------------+");
         if (filteredBooks.isEmpty()) {
-            System.out.println("No results");
+            System.out.println("No matches found");
             System.out.println("+---------------------------------------+\n");
             scanner.nextLine();
         } else {
@@ -95,17 +95,41 @@ public class AppService {
     public void getBooks() {
         List<Book> books = this.bookRepository.findAll();
         if (books.isEmpty()) {
-            System.out.println("No books added");
+            System.out.println("No books registered");
         } else {
             books.forEach(System.out::println);
         }
+        scanner.nextLine();
+    }
+
+    public void authorsAliveByYear(){
+        System.out.println("Enter a year: ");
+        Integer year = scanner.nextInt();
+        scanner.nextLine();
+        List<Author> authorsAlive = this.authorRepository.findByDeathYearGreaterThan(year);
+
+        if (!authorsAlive.isEmpty()){
+            authorsAlive.forEach(System.out::println);
+        }else{
+            System.out.println("No matches found");
+        }
+        scanner.nextLine();
     }
 
     private List<BookDTO> filterBooks(List<BookDTO> bookDTOS, String input) {
-        List<BookDTO> filterBooks = bookDTOS.stream()
+        return bookDTOS.stream()
                 .filter(bookDTO -> bookDTO.getTitle().toLowerCase().contains(input.toLowerCase()))
                 .toList();
-        return filterBooks;
+    }
+
+    public void getAuthors(){
+        List<Author> authors = this.authorRepository.findAll();
+        if (authors.isEmpty()){
+            System.out.println("No authors registered");
+        }else{
+            authors.forEach(System.out::println);
+        }
+        scanner.nextLine();
     }
 
 }

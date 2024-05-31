@@ -11,10 +11,10 @@ import java.util.Scanner;
 public class Principal {
     private final String URL_BASE = "https://gutendex.com/books/";
     private final Scanner scanner = new Scanner(System.in);
-    private final AppService bookService;
+    private final AppService appService;
 
     public Principal(IBookRepository iBookRepository, IAuthorRepository iAuthorRepository) {
-        bookService = new AppService(iBookRepository, iAuthorRepository);
+        appService = new AppService(iBookRepository, iAuthorRepository);
     }
 
     public void showMenu() {
@@ -38,16 +38,16 @@ public class Principal {
             scanner.nextLine();
             switch (option) {
                 case 1:
-                    bookService.findBookByTitle(URL_BASE);
+                    appService.findBookByTitle(URL_BASE);
                     break;
                 case 2:
-                    bookService.getBooks();
+                    appService.getBooks();
                     break;
                 case 3:
-
+                    appService.getAuthors();
                     break;
                 case 4:
-
+                    appService.authorsAliveByYear();
                     break;
                 case 5:
 
