@@ -13,7 +13,8 @@ public class Book {
 
     @ManyToOne()
     private Author author;
-    private String language;
+    @Enumerated(EnumType.STRING)
+    private Language language;
     private String downloads;
 
     public Book() {
@@ -22,7 +23,7 @@ public class Book {
     public Book(BookDTO bookDTO) {
         this.title = bookDTO.getTitle();
         this.author = bookDTO.getAuthor();
-        this.language = bookDTO.getLanguage();
+        this.language = Language.setBookLanguage(bookDTO.getLanguage());
         this.downloads = bookDTO.getDownloads();
     }
 
@@ -46,11 +47,11 @@ public class Book {
         this.author = author;
     }
 
-    public String getLanguage() {
+    public Language getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
 
@@ -72,6 +73,6 @@ public class Book {
                 Author: %s
                 Language: %s
                 Downloads: %s
-                """.formatted(title, author.getName(), language, downloads);
+                """.formatted(title, author.getName(), language.getLanguage(), downloads);
     }
 }

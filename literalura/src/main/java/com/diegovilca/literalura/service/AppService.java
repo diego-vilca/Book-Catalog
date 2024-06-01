@@ -3,9 +3,11 @@ package com.diegovilca.literalura.service;
 import com.diegovilca.literalura.model.Author;
 import com.diegovilca.literalura.model.Book;
 import com.diegovilca.literalura.model.BookDTO;
+import com.diegovilca.literalura.model.Language;
 import com.diegovilca.literalura.repository.IAuthorRepository;
 import com.diegovilca.literalura.repository.IBookRepository;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -43,7 +45,7 @@ public class AppService {
                         System.out.println(j + ". " + filteredBooks.get(i).getTitle() + " (" + filteredBooks.get(i).getLanguages().get(0) + ")");
                     });
             System.out.println("+---------------------------------------+\n");
-            System.out.println("Enter the number of the book to save:");
+            System.out.println("Enter the number of the book to save: ");
             int index = scanner.nextInt();
             scanner.nextLine();
 
@@ -132,4 +134,53 @@ public class AppService {
         scanner.nextLine();
     }
 
+    public void getBooksByLanguage(){
+        System.out.println("""
+        
+        ***************************
+        *        Languages        *
+        ***************************
+        1. English
+        2. Spanish
+        3. Portuguese
+        4. French
+        
+        Enter the number of the chosen language:""");
+
+        try{
+            var ordinal = scanner.nextInt();
+            scanner.nextLine();
+            List<Book> booksByLanguages = List.of();
+
+            switch (ordinal){
+                case 1:
+                    booksByLanguages = this.bookRepository.findBookByLanguage(Language.ENGLISH);
+                    break;
+                case 2:
+                    booksByLanguages = this.bookRepository.findBookByLanguage(Language.SPANISH);
+                    break;
+                case 3:
+                    booksByLanguages = this.bookRepository.findBookByLanguage(Language.PORTUGUESE);
+                    break;
+                case 4:
+                    booksByLanguages = this.bookRepository.findBookByLanguage(Language.FRENCH);
+                    break;
+                default:
+                    System.out.println("Invalid input");
+                    ordinal = 0;
+            }
+
+            if (ordinal != 0 ){
+                if (booksByLanguages.isEmpty()){
+                    System.out.println("No matches found");
+                }else{
+                    booksByLanguages.forEach(System.out::println);
+                }
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        scanner.nextLine();
+    }
 }
