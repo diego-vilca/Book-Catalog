@@ -8,14 +8,14 @@ import java.util.List;
 @Entity
 @Table(name = "authors")
 public class Author {
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private final List<Book> books;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Integer birthYear;
     private Integer deathYear;
-    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
-    private final List<Book> books;
 
     public Author() {
         this.books = new ArrayList<>();

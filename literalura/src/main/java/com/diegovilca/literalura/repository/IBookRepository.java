@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface IBookRepository extends JpaRepository<Book, Long> {
     boolean existsByTitle(String title);
+
     List<Book> findBookByLanguage(Language language);
 }

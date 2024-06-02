@@ -6,8 +6,9 @@ import com.diegovilca.literalura.model.BookDTO;
 import com.diegovilca.literalura.model.Language;
 import com.diegovilca.literalura.repository.IAuthorRepository;
 import com.diegovilca.literalura.repository.IBookRepository;
+import com.diegovilca.literalura.util.UserInputHandler;
 
-import java.util.InputMismatchException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -19,20 +20,22 @@ public class AppService {
     private final IBookRepository bookRepository;
     private final IAuthorRepository authorRepository;
     private final ApiService apiService;
+    private final UserInputHandler userInputHandler;
 
     public AppService(IBookRepository iBookRepository, IAuthorRepository iAuthorRepository) {
         scanner = new Scanner(System.in);
         apiService = new ApiService();
         this.bookRepository = iBookRepository;
         this.authorRepository = iAuthorRepository;
+        userInputHandler = new UserInputHandler();
     }
 
     public void findBookByTitle(String url) {
         System.out.println("Enter book's title: ");
         String title = scanner.nextLine();
-
         List<BookDTO> books = apiService.getDataFromApi(url + "?search=" + title.replace(" ", "%20"));
         List<BookDTO> filteredBooks = filterBooks(books, title);
+
         System.out.println("\n+---------------------------------------+");
         if (filteredBooks.isEmpty()) {
             System.out.println("No matches found");
@@ -45,13 +48,20 @@ public class AppService {
                         System.out.println(j + ". " + filteredBooks.get(i).getTitle() + " (" + filteredBooks.get(i).getLanguages().get(0) + ")");
                     });
             System.out.println("+---------------------------------------+\n");
-            System.out.println("Enter the number of the book to save: ");
-            int index = scanner.nextInt();
-            scanner.nextLine();
+
+            int index = this.userInputHandler.getValidatedInt(
+                    "Enter the number of the book to save: ",
+                    1, filteredBooks.size());
 
             saveBook(filteredBooks.get(index - 1));
             scanner.nextLine();
         }
+    }
+
+    private List<BookDTO> filterBooks(List<BookDTO> bookDTOS, String input) {
+        return bookDTOS.stream()
+                .filter(bookDTO -> bookDTO.getTitle().toLowerCase().contains(input.toLowerCase()))
+                .toList();
     }
 
     private void saveAuthor(Book book) {
@@ -104,55 +114,49 @@ public class AppService {
         scanner.nextLine();
     }
 
-    public void authorsAliveByYear(){
-        System.out.println("Enter a year: ");
-        Integer year = scanner.nextInt();
-        scanner.nextLine();
-        List<Author> authorsAlive = this.authorRepository.findByDeathYearGreaterThan(year);
+    public void authorsAliveByYear() {
+        Integer year = this.userInputHandler.getValidatedInt(
+                "Enter a year: ",
+                -1000, LocalDate.now().getYear());
+        List<Author> authorsAlive = this.authorRepository.findByBirthYearLessThanEqualAndDeathYearGreaterThanEqual(year, year);
 
-        if (!authorsAlive.isEmpty()){
+        if (!authorsAlive.isEmpty()) {
             authorsAlive.forEach(System.out::println);
-        }else{
+        } else {
             System.out.println("No matches found");
         }
         scanner.nextLine();
     }
 
-    private List<BookDTO> filterBooks(List<BookDTO> bookDTOS, String input) {
-        return bookDTOS.stream()
-                .filter(bookDTO -> bookDTO.getTitle().toLowerCase().contains(input.toLowerCase()))
-                .toList();
-    }
-
-    public void getAuthors(){
+    public void getAuthors() {
         List<Author> authors = this.authorRepository.findAll();
-        if (authors.isEmpty()){
+        if (authors.isEmpty()) {
             System.out.println("No authors registered");
-        }else{
+        } else {
             authors.forEach(System.out::println);
         }
         scanner.nextLine();
     }
 
-    public void getBooksByLanguage(){
+    public void getBooksByLanguage() {
         System.out.println("""
-        
-        ***************************
-        *        Languages        *
-        ***************************
-        1. English
-        2. Spanish
-        3. Portuguese
-        4. French
-        
-        Enter the number of the chosen language:""");
+                        
+                ***************************
+                *        Languages        *
+                ***************************
+                1. English
+                2. Spanish
+                3. Portuguese
+                4. French        
+                """);
 
-        try{
-            var ordinal = scanner.nextInt();
-            scanner.nextLine();
+        try {
+            var number = this.userInputHandler.getValidatedInt(
+                    "Enter the number of the chosen language:",
+                    1, 4);
             List<Book> booksByLanguages = List.of();
 
-            switch (ordinal){
+            switch (number) {
                 case 1:
                     booksByLanguages = this.bookRepository.findBookByLanguage(Language.ENGLISH);
                     break;
@@ -167,18 +171,18 @@ public class AppService {
                     break;
                 default:
                     System.out.println("Invalid input");
-                    ordinal = 0;
+                    number = 0;
             }
 
-            if (ordinal != 0 ){
-                if (booksByLanguages.isEmpty()){
+            if (number != 0) {
+                if (booksByLanguages.isEmpty()) {
                     System.out.println("No matches found");
-                }else{
+                } else {
                     booksByLanguages.forEach(System.out::println);
                 }
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         scanner.nextLine();

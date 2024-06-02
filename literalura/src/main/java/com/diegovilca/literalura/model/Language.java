@@ -6,24 +6,24 @@ public enum Language {
     PORTUGUESE("pt", "portuguese"),
     FRENCH("fr", "french");
 
-    private String languageCode;
-    private String language;
+    private final String languageCode;
+    private final String language;
 
-    Language (String languageCode, String language){
+    Language(String languageCode, String language) {
         this.languageCode = languageCode;
         this.language = language;
     }
 
-    public String getLanguage() {
-        return languageCode;
-    }
-
-    public static Language setBookLanguage(String responseLanguage){
-        for (Language l : Language.values()){
-            if (l.languageCode.equalsIgnoreCase(responseLanguage)){
+    public static Language setBookLanguage(String responseLanguage) {
+        for (Language l : Language.values()) {
+            if (l.languageCode.equalsIgnoreCase(responseLanguage)) {
                 return l;
             }
         }
         throw new IllegalArgumentException("No matches found: " + responseLanguage);
+    }
+
+    public String getLanguage() {
+        return languageCode;
     }
 }

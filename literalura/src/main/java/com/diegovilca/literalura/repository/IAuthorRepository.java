@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface IAuthorRepository extends JpaRepository<Author, Long> {
     Optional<Author> findByName(String name);
-    List<Author> findByDeathYearGreaterThan(Integer year);
+
+    List<Author> findByBirthYearLessThanEqualAndDeathYearGreaterThanEqual(Integer year1, Integer year2);
 }
