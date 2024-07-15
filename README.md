@@ -72,37 +72,37 @@ Al abrir el proyecto en algun IDE de su preferencia aparecera por consola el sig
 ![Imagen del menú](https://github.com/user-attachments/assets/3368e46a-b689-4963-ab87-97b84f2256a4)
 
 - **Opcion 1: Encontrar libro por titulo**
-El sistema le pedira que ingrese un titulo. El programa buscara en la API de Gutendex y le dara opciones de titulos que coincidan o contengan el texto de entrada. Ingrese el número del título de su elección y este se registrara en la base de datos.
+- El sistema le pedira que ingrese un titulo. El programa buscara en la API de Gutendex y le dara opciones de titulos que coincidan o contengan el texto de entrada. Ingrese el número del título de su elección y este se registrara en la base de datos.
 
 ![Imagen del opción 1](https://github.com/user-attachments/assets/959f2b0e-4f19-435d-934b-e2969191f7d3)
 
 
 - **Opcion 2: Listar libros registrados**
-El programa mostrara un listado de los libros guardados en la base de datos.
+- El programa mostrara un listado de los libros guardados en la base de datos.
 
 ![Imagen del opción 2](https://github.com/user-attachments/assets/459384a4-f730-4395-b6b0-e5aff88818cd)
 
 
 - **Opcion 3: Listar autores registrados**
-El programa mostrara un listado con los autores guardados en la base de datos.
+- El programa mostrara un listado con los autores guardados en la base de datos.
 
 ![Imagen del opción 3](https://github.com/user-attachments/assets/ab36fcbe-30d4-4243-a863-7ab5341d59b2)
 
 
 - **Opcion 4: Listar autores vivos por fecha**
-Al seleccionar esta opción el programa le solicitara un año y devolvera los autores registrados vivos durante esa fecha.
+- Al seleccionar esta opción el programa le solicitara un año y devolvera los autores registrados vivos durante esa fecha.
 
 ![Imagen del opción 4](https://github.com/user-attachments/assets/6a4660cb-a46f-40da-8e62-c771b66b94d5)
 
 
 - **Opcion 5: Listar libros por idioma**
-Seleccionar esta opción dara paso a un menú de lenguajes del cual debera elegir la opción correspondiente al idioma de los libros que desea que se muestren.
+- Seleccionar esta opción dara paso a un menú de lenguajes del cual debera elegir la opción correspondiente al idioma de los libros que desea que se muestren.
 
 ![Imagen del opción 5](https://github.com/user-attachments/assets/1554127d-4223-4ad3-92b6-29e9efd7c717)
 
 
 - **Opcion 0: Salir**
-Esta opción da por terminado el programa.
+- Esta opción da por terminado el programa.
 ## Autor
 
 - [@diego-vilca](https://github.com/diego-vilca)
